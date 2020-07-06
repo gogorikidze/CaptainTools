@@ -1,0 +1,54 @@
+body{
+  margin: 0;
+  font-family: 'Play', sans-serif;
+}
+#page{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+#maps{
+}
+.map{
+  background-color: black;
+  width: 300px;
+  height: 21px;
+  text-align: center;
+  color:white;
+  font-size: 17px;
+}
+.perc1{
+  text-align: center;
+  display: inline-block;
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: green;
+}
+.perc2{
+  text-align: center;
+  display: inline-block;
+  float: right;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: red;
+}
+.team{
+  width: 200px;
+  height: 168px;
+  background-color: black;
+  text-align: center;
+  line-height: 168px;
+  font-size: 22px;
+  color:green;
+}
+#team1{
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+#team2{
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}

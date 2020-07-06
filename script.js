@@ -2,6 +2,7 @@ const serversideApiKey = "71f1b01d-3170-4613-ab20-b6d72ca7dc2b"
 const mapPool = ["de_vertigo", "de_overpass", "de_inferno", "de_mirage", "de_dust2", "de_cache", "de_train", "de_nuke"];
 
 var players = {};
+var team1, team2;
 
 getMatchData("1-26c03ecf-9317-4ef6-ae51-37c70340c67f");
 
@@ -66,6 +67,9 @@ function getFaceitData(url, onload){
 //gets all the players from both teams and put them in "players" obj
 function getMatchData(matchID){
   getFaceitData("https://open.faceit.com/data/v4/matches/"+matchID, function(response){
+    team1 = response.teams.faction1.name;
+    team2 = response.teams.faction2.name;
+
     //adds faction1 ids to team1 array;
     for(i = 0; i <= 4; i++){
       players[i] = {id: response.teams.faction1.roster[i].player_id, team:response.teams.faction1.name, winrate:0};
@@ -78,11 +82,9 @@ function getMatchData(matchID){
     for(i = 0; i <= 9; i++){
       getMapStats(players[i].id, i);
     }
-    console.log(response);
-
   });
 }
 
 //getMapStats("0b74bdfd-b6c2-4104-a62d-b882d5be5bc3");
-//getMapStats("2a6d3d0c-f124-4d00-bb51-8b5ce6861956");
+getPlayerStats("2a6d3d0c-f124-4d00-bb51-8b5ce6861956");
 //getProfileData("Ass-");
