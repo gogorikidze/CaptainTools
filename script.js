@@ -6,9 +6,7 @@ let team1, team2;
 let team1stats = {};
 let team2stats = {};
 
-getMatchData("1-26c03ecf-9317-4ef6-ae51-37c70340c67f");
-
-
+//getMatchData("1-26c03ecf-9317-4ef6-ae51-37c70340c67f");
 
 //gets a winrate for a sigle map
 function getMapWinrate(segments, mapName){
@@ -91,6 +89,7 @@ function getMatchData(matchID){
     getTeamAvg();
   });
 }
+//gets global averages for every map
 function getTeamAvg(){
   if(Object.keys(players[9].winrate).length === 8){
     //creates pool of maps for global winrates
@@ -120,12 +119,12 @@ function getTeamAvg(){
     for(a = 0; a < mapPool.length; a++){
       team2stats[mapPool[a]] = team2stats[mapPool[a]]/5;
     }
-    console.log(team2stats);
-    displayRawWinrates();
+    displayAbsoluteWinrates();
   }else{
     setTimeout(getTeamAvg, 500);
   }
 }
+//displays raw winrates
 function displayRawWinrates(){
   for(a = 0; a < mapPool.length; a++){
     var div1 = document.getElementById("t1"+mapPool[a]);
@@ -134,12 +133,47 @@ function displayRawWinrates(){
     var div2 = document.getElementById("t2"+mapPool[a]);
     div2.innerText = team2stats[mapPool[a]].toFixed(0)+"%";
 
-    if(team2stats[mapPool[a]].toFixed(0) >= team1stats[mapPool[a]].toFixed(0)){
+    if(team2stats[mapPool[a]].toFixed(0) > team1stats[mapPool[a]].toFixed(0)){
       div1.style.backgroundColor = "red";
       div2.style.backgroundColor = "green";
     }else{
       div1.style.backgroundColor = "green";
       div2.style.backgroundColor = "red";
     }
+    if(team2stats[mapPool[a]].toFixed(0) == team1stats[mapPool[a]].toFixed(0)){
+      div1.style.backgroundColor = "darkorange";
+      div2.style.backgroundColor = "darkorange";
+    }
   }
+}
+//displayes absolute winrates. percentdisplay = perc1/(perc1+perc2)*100
+function displayAbsoluteWinrates(){
+  for(a = 0; a < mapPool.length; a++){
+    perc1 = team1stats[mapPool[a]];
+    perc2 = team2stats[mapPool[a]];
+    percent1 = (perc1/(perc1+perc2)*100).toFixed(0);
+    percent2 = (perc2/(perc1+perc2)*100).toFixed(0);
+
+    var div1 = document.getElementById("t1"+mapPool[a]);
+    div1.innerText = percent1+"%";
+
+    var div2 = document.getElementById("t2"+mapPool[a]);
+    div2.innerText = percent2+"%";
+
+    if(percent2 > percent1){
+      div1.style.backgroundColor = "red";
+      div2.style.backgroundColor = "green";
+    }else{
+      div1.style.backgroundColor = "green";
+      div2.style.backgroundColor = "red";
+    }
+    if(percent2 == percent1){
+      div1.style.backgroundColor = "darkorange";
+      div2.style.backgroundColor = "darkorange";
+    }
+  }
+}
+function search(){
+  link = document.getElementById("linkfield").value;
+  getMatchData(link.split("room/")[1]);
 }

@@ -7,6 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
   </head>
   <body>
+    <h1 style="text-align:center; color:#E14A00">CaptainTools' Winrate insights</h1>
+    <div id="searchdiv">
+      <input id="linkfield" type="text" placeholder="MatchRoom Link"><button id="search" onclick="search()">Deduct</button>
+    </div>
     <div id="page">
       <div class="team" id="team1">team_team1</div>
       <div id="maps">
@@ -52,6 +56,10 @@
         </div>
       </div>
       <div class="team" id="team2">team_team2</div>
+    </div>
+    <div id="buttons">
+      <button id="absolute" style="background-color: green" onclick="displayAbsoluteWinrates(); document.getElementById('raw').style.backgroundColor = 'red'; document.getElementById('absolute').style.backgroundColor = 'green';">Absolute Winrate</button>
+      <button id="raw" style="background-color: red" onclick="displayRawWinrates(); document.getElementById('raw').style.backgroundColor = 'green'; document.getElementById('absolute').style.backgroundColor = 'red';">Raw Winrate</button>
     </div>
   </body>
 </html>

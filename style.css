@@ -1,18 +1,54 @@
 body{
   margin: 0;
   font-family: 'Play', sans-serif;
-}
-#page{
   position:absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+#buttons{
+  width: 700px;
+  text-align: center;
+  padding-top: 15px;
+}
+#buttons button{
+  height: 35px;
+  width: 120px;
+  border: 1px solid #0A0C0C;
+  outline:none;
+  color:white;
+  border-radius: 10px;
+  font-family: 'Play', sans-serif;
+}
+#linkfield{
+  height: 30px;
+  width: 550px;
+  border-radius: 10px;
+  border: 1px solid #0A0C0C;
+  outline:none;
+  padding-right: 20px;
+}
+#search{
+  height: 35px;
+  width: 120px;
+  background-color: #0A0C0C;
+  border: 1px solid #0A0C0C;
+  outline:none;
+  color:#E14A00;
+  border-radius: 10px;
+  font-family: 'Play', sans-serif;
+  font-size: 16px;
+}
+#searchdiv{
+  padding-bottom: 15px;
+}
+#page{
   display: flex;
 }
 #maps{
 }
 .map{
-  background-color: black;
+  background-color: #0A0C0C;
   width: 300px;
   height: 21px;
   text-align: center;
@@ -26,6 +62,7 @@ body{
   padding-left: 10px;
   padding-right: 10px;
   background-color: green;
+  border-radius: 10px;
 }
 .perc2{
   text-align: center;
@@ -34,11 +71,12 @@ body{
   padding-left: 10px;
   padding-right: 10px;
   background-color: red;
+  border-radius: 10px;
 }
 .team{
   width: 200px;
   height: 168px;
-  background-color: black;
+  background-color: #0A0C0C;
   text-align: center;
   line-height: 168px;
   font-size: 20px;
