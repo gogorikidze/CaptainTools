@@ -1,8 +1,10 @@
 const serversideApiKey = "71f1b01d-3170-4613-ab20-b6d72ca7dc2b"
 const mapPool = ["de_vertigo", "de_overpass", "de_inferno", "de_mirage", "de_dust2", "de_cache", "de_train", "de_nuke"];
 
-var players = {};
-var team1, team2;
+let players = {};
+let team1, team2;
+let team1stats = {};
+let team2stats = {};
 
 getMatchData("1-26c03ecf-9317-4ef6-ae51-37c70340c67f");
 
@@ -67,8 +69,11 @@ function getFaceitData(url, onload){
 //gets all the players from both teams and put them in "players" obj
 function getMatchData(matchID){
   getFaceitData("https://open.faceit.com/data/v4/matches/"+matchID, function(response){
+    //set team names
     team1 = response.teams.faction1.name;
     team2 = response.teams.faction2.name;
+    document.getElementById("team1").innerText = team1;
+    document.getElementById("team2").innerText = team2;
 
     //adds faction1 ids to team1 array;
     for(i = 0; i <= 4; i++){
@@ -82,9 +87,59 @@ function getMatchData(matchID){
     for(i = 0; i <= 9; i++){
       getMapStats(players[i].id, i);
     }
+
+    getTeamAvg();
   });
 }
+function getTeamAvg(){
+  if(Object.keys(players[9].winrate).length === 8){
+    //creates pool of maps for global winrates
+    for(a = 0; a < mapPool.length; a++){
+      team1stats[mapPool[a]] = 0;
+      team2stats[mapPool[a]] = 0;
+    }
+    //add all the individual winrates to global
+    for(i = 0; i <= 4; i++){
+      for(a = 0; a < mapPool.length; a++){
+        team1stats[mapPool[a]] = parseInt(team1stats[mapPool[a]]) + parseInt(players[i].winrate[mapPool[a]]);
+      }
+    }
+    //divide it by 5 to get average
+    for(a = 0; a < mapPool.length; a++){
+      team1stats[mapPool[a]] = team1stats[mapPool[a]]/5;
+    }
 
-//getMapStats("0b74bdfd-b6c2-4104-a62d-b882d5be5bc3");
-getPlayerStats("2a6d3d0c-f124-4d00-bb51-8b5ce6861956");
-//getProfileData("Ass-");
+
+    //add all the individual winrates to global
+    for(i = 5; i <= 9; i++){
+      for(a = 0; a < mapPool.length; a++){
+        team2stats[mapPool[a]] = parseInt(team2stats[mapPool[a]]) + parseInt(players[i].winrate[mapPool[a]]);
+      }
+    }
+    //divide it by 5 to get average
+    for(a = 0; a < mapPool.length; a++){
+      team2stats[mapPool[a]] = team2stats[mapPool[a]]/5;
+    }
+    console.log(team2stats);
+    displayRawWinrates();
+  }else{
+    setTimeout(getTeamAvg, 500);
+  }
+}
+function displayRawWinrates(){
+  for(a = 0; a < mapPool.length; a++){
+    var div1 = document.getElementById("t1"+mapPool[a]);
+    div1.innerText = team1stats[mapPool[a]].toFixed(0)+"%";
+
+    var div2 = document.getElementById("t2"+mapPool[a]);
+    div2.innerText = team2stats[mapPool[a]].toFixed(0)+"%";
+
+    if(team2stats[mapPool[a]].toFixed(0) >= team1stats[mapPool[a]].toFixed(0)){
+      div1.style.backgroundColor = "red";
+      div2.style.backgroundColor = "green";
+    }else{
+      div1.style.backgroundColor = "green";
+      div2.style.backgroundColor = "red";
+    }
+  }
+}
